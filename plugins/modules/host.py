@@ -166,7 +166,6 @@ def main():
            host_exists = True
            break
 
-
     if module.params.get('state') == 'present':
 
         if host_exists:
@@ -176,14 +175,21 @@ def main():
         else:
             api.add_host(module.params.get('host_name'), folder=module.params.get('host_folder'), ipaddress=module.params.get('host_ip'), alias=module.params.get('host_alias'))
 
+        result['host_info'] = api.get_host(module.params.get('host_name'))
 
     if module.params.get('state') == 'absent':
 
        if host_exists:
+           result['host_info'] = api.get_host(module.params.get('host_name'))
            api.delete_host(module.params.get('host_name'))
        else:
            # the host doesn't exists so we just return a msg
            result['msg'] = "There is no host named " + module.params.get('host_name')
+
+    all_hosts_after = api.get_all_hosts()
+
+    if all_hosts_before != all_hosts_after:
+        result['changed'] = True
 
     module.exit_json(**result)
 
