@@ -79,11 +79,11 @@ options:
           - ipaddress
         type: str
 
-    #  host_tags:
-    #      description:
-    #          - Dict of tags to apply to the host
-    #      aliases: ['tags']
-    #      type: dict
+    host_tags:
+        description:
+            - Dict of tags to apply to the host (NOT IMPLEMENTED YET)
+        aliases: ['tags']
+        type: dict
 
     host_alias:
         description:
@@ -144,7 +144,7 @@ def main():
         host_name=dict(type='str', aliases=['hostname'], required=True),
         host_folder=dict(type='str', aliases=['folder'], default='/'),
         host_ip=dict(type='str', aliases=['ipaddress'], required=True),
-        #host_tags=dict(type='dict', aliases=['tags']),
+        host_tags=dict(type='dict', aliases=['tags']),
         host_alias=dict(type='str', aliases=['alias']),
         state=dict(type='str', choices=['absent', 'present'], default='present'),
         activate_changes=dict(type='bool', default=True)
