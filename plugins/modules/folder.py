@@ -163,6 +163,10 @@ def main():
     if all_folders_before != all_folders_after:
         result['changed'] = True
 
+    if module.params.get('activate_changes'):
+        if result['changed']:
+            api.activate_changes()
+
     module.exit_json(**result)
 
 
