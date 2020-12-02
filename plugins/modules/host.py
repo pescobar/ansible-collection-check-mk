@@ -4,6 +4,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+from datetime import datetime
 
 from ansible_collections.pescobar.check_mk.plugins.module_utils.check_mk_api import WebApi, \
             NoNoneValueDict, WebApi, CheckMkWebApiException, CheckMkWebApiResponseException, \
@@ -177,7 +178,7 @@ def main():
             api.edit_host(module.params.get('host_name'), ipaddress=module.params.get('host_ip'), alias=module.params.get('host_alias'))
             result['msg'] = "Host updated: " + module.params.get('host_name')
         else:
-            api.add_host(module.params.get('host_name'), folder=module.params.get('host_folder'), ipaddress=module.params.get('host_ip'), alias=module.params.get('host_alias'))
+            api.add_host(module.params.get('host_name'), folder=module.params.get('host_folder'), ipaddress=module.params.get('host_ip'), alias=module.params.get('host_alias'), meta_data={"created_at":datetime.today().strftime('%Y%m%d'), "created_by":"ansible"})
             result['msg'] = "Host added: " + module.params.get('host_name')
 
         result['host_info'] = api.get_host(module.params.get('host_name'))
