@@ -18,7 +18,7 @@ ANSIBLE_METADATA = {
 
 DOCUMENTATION = '''
 ---
-module: check_mk_host
+module: host
 
 short_description: Administer check_mk hosts using the http API
 
