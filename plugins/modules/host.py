@@ -159,7 +159,9 @@ def main():
     )
 
     # login to the API
-    api = WebApi(module.params.get('base_url'), username=module.params.get('auth_username'), secret=module.params.get('auth_password'))
+    api = WebApi(module.params.get('base_url'), \
+                 username=module.params.get('auth_username'), \
+                 secret=module.params.get('auth_password'))
 
     all_hosts_before = api.get_all_hosts()
 
@@ -175,10 +177,15 @@ def main():
         if host_exists:
             # when updating/editing a host we cannot change the folder
             # if you want to change the folder you should remove/add the host
-            api.edit_host(module.params.get('host_name'), ipaddress=module.params.get('host_ip'), alias=module.params.get('host_alias'))
+            api.edit_host(module.params.get('host_name'), ipaddress=module.params.get('host_ip'), \
+                          alias=module.params.get('host_alias'))
             result['msg'] = "Host updated: " + module.params.get('host_name')
         else:
-            api.add_host(module.params.get('host_name'), folder=module.params.get('host_folder'), ipaddress=module.params.get('host_ip'), alias=module.params.get('host_alias'), meta_data={"created_at":datetime.today().strftime('%Y%m%d'), "created_by":"ansible"})
+            api.add_host(module.params.get('host_name'), \
+                         folder=module.params.get('host_folder'), \
+                         ipaddress=module.params.get('host_ip'), \
+                         alias=module.params.get('host_alias'), \
+                         meta_data={"created_at":datetime.today().strftime('%Y%m%d'), "created_by":"ansible"})
             result['msg'] = "Host added: " + module.params.get('host_name')
 
         result['host_info'] = api.get_host(module.params.get('host_name'))
