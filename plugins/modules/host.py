@@ -5,7 +5,9 @@
 
 from __future__ import absolute_import, division, print_function
 
-import check_mk_web_api
+from ansible_collections.pescobar.check_mk.plugins.module_utils.check_mk_api import WebApi, \
+            NoNoneValueDict, WebApi, CheckMkWebApiException, CheckMkWebApiResponseException, \
+            CheckMkWebApiAuthenticationException
 
 from ansible.module_utils.basic import AnsibleModule
 __metaclass__ = type
@@ -130,6 +132,7 @@ msg:
     returned: always
 '''
 
+
 def main():
 
     # define the available arguments/parameters that a user can pass to the module
@@ -155,7 +158,7 @@ def main():
     )
 
     # login to the API
-    api = check_mk_web_api.WebApi(module.params.get('base_url'), username=module.params.get('auth_username'), secret=module.params.get('auth_password'))
+    api = WebApi(module.params.get('base_url'), username=module.params.get('auth_username'), secret=module.params.get('auth_password'))
 
     all_hosts_before = api.get_all_hosts()
 
