@@ -18,14 +18,14 @@ jobs:
       with:
         python-version: 3.6
 
-    - name: Boot the docker containers with latest guacamole
+    - name: Boot the docker containers with latest check_mk raw edition
       working-directory: ./devel-utils
       run: ./boot-containers.sh
 
     - name: Install latest ansible and make the collection available
       run: |
-        mkdir -p ~/.ansible/collections/ansible_collections/scicore/
-        ln -s ${GITHUB_WORKSPACE} ~/.ansible/collections/ansible_collections/scicore/guacamole
+        mkdir -p ~/.ansible/collections/ansible_collections/pescobar/
+        ln -s ${GITHUB_WORKSPACE} ~/.ansible/collections/ansible_collections/pescobar/check_mk
         pip install ansible
 
     - name: Execute the CI playbook
