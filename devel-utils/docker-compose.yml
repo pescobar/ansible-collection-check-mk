@@ -1,0 +1,45 @@
+# based on https://checkmk.com/cms_introduction_docker.html
+#
+version: '3'
+
+services:
+
+  check_mk_raw:
+    container_name: check-mk-ci
+    image: checkmk/check-mk-raw:1.6.0-latest
+    ports:
+      - 9090:5000
+    # volumes:
+    #   - cmk-ci:/omd/sites
+    #   - /etc/localtime:/etc/localtime:ro
+    environment:
+      CMK_PASSWORD: "cmkadmin"
+    # tmpfs:
+    #   /opt/omd/sites/cmk/tmp:uid=1000,gid=1000
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 2048
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '10'
+
+  # update-passwd-automation-user:
+  #   container_name: check-mk-ci-update-automation-passwd
+  #   image: debian:stable-slim
+  #   #command: ["/bin/bash", "-c", "until [ -f /opt/omd/sites/cmk/var/check_mk/web/automation/automation.secret ]; do sleep 3; done;  echo automation > /opt/omd/sites/cmk/var/check_mk/web/automation/automation.secret" ]
+  #   # command: ["/bin/bash", "-c", "sleep 10; mkdir -p /opt/omd/sites/cmk/var/check_mk/web/automation; echo automation > /opt/omd/sites/cmk/var/check_mk/web/automation/automation.secret" ]
+  #   command: ["/bin/bash", "-c", "until [ -f /opt/omd/sites/cmk/var/check_mk/web/automation/automation.secret ]; do sleep 2; done; echo automation > /opt/omd/sites/cmk/var/check_mk/web/automation/automation.secret" ]
+  #   volumes:
+  #     - cmk-ci:/omd/sites
+  #   depends_on:
+  #     - check_mk_raw
+
+# volumes:
+#   cmk-ci:
+
+## update password for automation user
+#$> docker exec -ti check-mk-ci bash -c "echo automation > /opt/omd/sites/cmk/var/check_mk/web/automation/automation.secret"
