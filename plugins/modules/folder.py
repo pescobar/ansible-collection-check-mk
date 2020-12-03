@@ -148,11 +148,13 @@ def main():
             result['msg'] = "Folder added: '%s'" % module.params.get('folder_name')
 
         result['folder_info'] = api.get_folder(module.params.get('folder_name'))
+        result['folder_info']['folder_name'] = module.params.get('folder_name')
 
     if module.params.get('state') == 'absent':
 
        if folder_exists:
            result['folder_info'] = api.get_folder(module.params.get('folder_name'))
+           result['folder_info']['folder_name'] = module.params.get('folder_name')
            api.delete_folder(module.params.get('folder_name'))
            result['msg'] = "Folder deleted: '%s'" % module.params.get('folder_name')
        else:
