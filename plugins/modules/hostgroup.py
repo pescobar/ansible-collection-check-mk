@@ -155,14 +155,14 @@ def main():
             api.add_hostgroup(group=module.params.get('hostgroup'), alias=module.params.get('alias'))
             result['msg'] = "hostgroup added: " + module.params.get('hostgroup')
 
-        result['hostgroup_info']['hostgroup'] = module.params.get('hostgroup')
         result['hostgroup_info'] = api.get_hostgroup(module.params.get('hostgroup'))
+        result['hostgroup_info']['hostgroup'] = module.params.get('hostgroup')
 
     if module.params.get('state') == 'absent':
 
        if hostgroup_exists:
-           result['hostgroup_info']['hostgroup'] = module.params.get('hostgroup')
            result['hostgroup_info'] = api.get_hostgroup(module.params.get('hostgroup'))
+           result['hostgroup_info']['hostgroup'] = module.params.get('hostgroup')
            api.delete_hostgroup(module.params.get('hostgroup'))
            result['msg'] = "hostgroup deleted: " + module.params.get('hostgroup')
        else:
