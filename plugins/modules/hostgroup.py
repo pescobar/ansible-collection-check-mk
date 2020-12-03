@@ -121,7 +121,7 @@ def main():
         auth_password=dict(type='str', aliases=['password'], required=True, no_log=True),
         validate_certs=dict(type='bool', default=True),
         hostgroup=dict(type='str', aliases=['hostname'], required=True),
-        alias=dict(type='str', aliases=['alias']),
+        alias=dict(type='str'),
         state=dict(type='str', choices=['absent', 'present'], default='present'),
         activate_changes=dict(type='bool', default=True)
     )
