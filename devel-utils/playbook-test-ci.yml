@@ -61,7 +61,7 @@
         auth_password: "{{ check_mk_automation_passwd }}"
         hostgroup: hostgroup1
         alias: webservers
-        state: absent
+        state: present
       register: check_mk_hostgroup_info
       tags: hostgroup
 
