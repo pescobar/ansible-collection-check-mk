@@ -150,7 +150,12 @@ def main():
     if module.params.get('state') == 'present':
 
         if hostgroup_exists:
-            result['msg'] = "Group '%s' already exists" % module.params.get('hostgroup')
+            hostgroup_details = api.get_hostgroup(module.params.get('hostgroup'))
+            if hostgroup_details.get('alias') != module.params.get('alias'):
+                api.edit_hostgroup(group=module.params.get('hostgroup'), alias=module.params.get('alias'))
+                result['msg'] = "Alias updated for hostgroup '%s'" % module.params.get('hostgroup')
+            else:
+                result['msg'] = "Group '%s' already exists" % module.params.get('hostgroup')
         else:
             api.add_hostgroup(group=module.params.get('hostgroup'), alias=module.params.get('alias'))
             result['msg'] = "hostgroup added: " + module.params.get('hostgroup')

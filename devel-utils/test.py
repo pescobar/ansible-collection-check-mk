@@ -22,3 +22,7 @@ for groupname, alias in lala.items():
     break
 
 print(hostgroup_exists)
+
+
+lele = api.get_hostgroup('hostgroup1')
+print(lele)
