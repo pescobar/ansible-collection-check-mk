@@ -73,3 +73,23 @@
         success_msg: "hostgroup added"
         fail_msg: "Failed adding a hostgroup"
       tags: hostgroup
+
+    - name: Add a servicegroup
+      pescobar.check_mk.servicegroup:
+        base_url: "{{ check_mk_url }}"
+        auth_username: "{{ check_mk_automation_user }}"
+        auth_password: "{{ check_mk_automation_passwd }}"
+        servicegroup: servicegroup1
+        alias: dbs2
+        state: present
+      register: check_mk_servicegroup_info
+      tags: servicegroup
+
+    - name: Verify that the servicegroup has been created
+      assert:
+        that:
+          - check_mk_servicegroup_info.servicegroup_info.servicegroup == 'servicegroup1'
+          - check_mk_servicegroup_info.servicegroup_info.alias == 'dbs2'
+        success_msg: "servicegroup added"
+        fail_msg: "Failed adding a servicegroup"
+      tags: servicegroup
