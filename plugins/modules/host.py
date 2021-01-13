@@ -75,7 +75,6 @@ options:
     host_ip:
         description:
             - IP of the host
-        required: true
         aliases:
           - ipaddress
         type: str
@@ -144,7 +143,7 @@ def main():
         validate_certs=dict(type='bool', default=True),
         host_name=dict(type='str', aliases=['hostname'], required=True),
         host_folder=dict(type='str', aliases=['folder'], default='/'),
-        host_ip=dict(type='str', aliases=['ipaddress'], required=True),
+        host_ip=dict(type='str', aliases=['ipaddress']),
         host_tags=dict(type='dict', aliases=['tags']),
         host_alias=dict(type='str', aliases=['alias']),
         state=dict(type='str', choices=['absent', 'present'], default='present'),
