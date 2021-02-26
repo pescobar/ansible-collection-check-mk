@@ -97,17 +97,6 @@ options:
         default: true
         type: bool
 
-    discover_mode:
-        description:
-            - How to discover services
-        default: 'NEW'
-        type: str
-        choices:
-            - NEW (Only discover new services)
-            - REMOVE (Remove exceeding services)
-            - FIXALL (Remove exceeding services and discover new services (Tabula Rasa))
-            - REFRESH (Start from scratch)
-
     activate_changes:
         description:
             - Should we activate the changes on execution?
@@ -165,7 +154,6 @@ def main():
         host_alias=dict(type='str', aliases=['alias']),
         state=dict(type='str', choices=['absent', 'present'], default='present'),
         discover_services=dict(type='bool', default=True),
-        discover_mode=dict(type='str', choices=['NEW', 'REMOVE', 'FIXALL', 'REFRESH'], default='NEW'),
         activate_changes=dict(type='bool', default=True)
     )
 
@@ -207,7 +195,7 @@ def main():
             result['msg'] = "Host added: " + module.params.get('host_name')
 
         if module.params.get('discover_services'):
-            api.discover_services(module.params.get('host_name'), mode=module.params.get('discover_mode'))
+            api.discover_services(module.params.get('host_name'))
 
         result['host_info'] = api.get_host(module.params.get('host_name'))
 
