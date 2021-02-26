@@ -29,6 +29,7 @@ jobs:
         mkdir -p ~/.ansible/collections/ansible_collections/pescobar/
         ln -s ${GITHUB_WORKSPACE} ~/.ansible/collections/ansible_collections/pescobar/check_mk
         pip install ansible
+        pip install six
 
     - name: Execute the CI playbook
       working-directory: ./devel-utils
