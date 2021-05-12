@@ -1,0 +1,15 @@
+---
+# defaults file for check_mk agent
+# check_mk_agent_package_url: ""   # define the url to download the check_mk agent from your server
+check_mk_agent_over_ssh: true
+check_mk_agent_over_xinetd: false
+check_mk_agent_with_sudo: false
+check_mk_agent_plugins_requirements: []
+check_mk_agent_plugins: []
+check_mk_agent_local_checks: {}
+check_mk_agent_ssh_pubkey: ""
+check_mk_agent_add_to_wato: false
+check_mk_agent_monitoring_host_url: ""
+check_mk_agent_monitoring_host_wato_username: ""
+check_mk_agent_monitoring_host_wato_secret: ""
+check_mk_agent_monitoring_host_folder: ""
