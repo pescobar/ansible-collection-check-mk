@@ -127,5 +127,6 @@
   when: check_mk_agent_add_to_wato
   register: check_mk_agent_add_host_wato
   delegate_to: localhost
+  become: false
   tags:
     - skip_ansible_lint
