@@ -86,7 +86,7 @@
     key: "{{ check_mk_agent_ssh_pubkey }}"
   when:
     - check_mk_agent_over_ssh
-    - check_mk_agent_pubkey_file
+    - check_mk_agent_ssh_pubkey | length > 0
     - not check_mk_agent_with_sudo
 
 - name: check_mk_agent with sudo
@@ -113,7 +113,7 @@
 
   when:
     - check_mk_agent_over_ssh
-    - check_mk_agent_pubkey_file
+    - check_mk_agent_ssh_pubkey | length > 0
     - check_mk_agent_with_sudo
 
 - name: Add host to check_mk instance via WATO API
