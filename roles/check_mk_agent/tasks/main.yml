@@ -121,7 +121,7 @@
     base_url: "{{ check_mk_agent_monitoring_host_url }}"
     username: "{{ check_mk_agent_monitoring_host_wato_username }}"
     password: "{{ check_mk_agent_monitoring_host_wato_secret }}"
-    hostname: "{{ inventory_hostname }}"
+    hostname: "{{ check_mk_agent_hostname_to_register | default(inventory_hostname) }}"
     folder: "{{ check_mk_agent_monitoring_host_folder }}"
     state: present
   when: check_mk_agent_add_to_wato

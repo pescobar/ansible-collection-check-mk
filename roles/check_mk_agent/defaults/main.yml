@@ -1,6 +1,7 @@
 ---
 # defaults file for check_mk agent
 # check_mk_agent_package_url: ""   # define the url to download the check_mk agent from your server
+# check_mk_agent_hostname_to_register: ""  # define a custom hostname for the host to register. Default is inventory_hostname
 check_mk_agent_over_ssh: true
 check_mk_agent_over_xinetd: false
 check_mk_agent_with_sudo: false
