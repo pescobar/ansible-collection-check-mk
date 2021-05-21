@@ -145,9 +145,14 @@ class WebApi:
 
         request_format = query_params.get('request_format', 'json')
 
+        import ssl
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+
         response = urllib.request.urlopen(
             self.__build_request_path(query_params),
-            WebApi.__build_request_data(data, request_format)
+            WebApi.__build_request_data(data, request_format),context=ctx
         )
 
         if response.code != 200:
