@@ -14,3 +14,5 @@ check_mk_agent_monitoring_host_url: ""
 check_mk_agent_monitoring_host_wato_username: ""
 check_mk_agent_monitoring_host_wato_secret: ""
 check_mk_agent_monitoring_host_folder: ""
+# this is not used by now. ssl cert check is disabled by default
+#check_mk_agent_validate_api_ssl_certs: true
