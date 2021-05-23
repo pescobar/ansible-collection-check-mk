@@ -1,31 +1,31 @@
 ---
 
 - name: Install check_mk_agent | RedHat
-  yum:
+  ansible.builtin.yum:
     name: "{{ check_mk_agent_package_url | default('check-mk-agent') }}"
     state: present
   when: ansible_os_family == 'RedHat'
 
 - name: Install check_mk_agent | Debian
-  apt:
+  ansible.builtin.apt:
     name: "{{ check_mk_agent_package_url | default('check-mk-agent') }}"
     state: present
   when: ansible_os_family == 'Debian'
 
 - name: Install plugin requirements
-  package:
+  ansible.builtin.package:
     name: "{{ check_mk_agent_plugins_requirements }}"
     state: present
 
 - name: Create plugins repository
-  file:
+  ansible.builtin.file:
     path: /usr/lib/check_mk_agent/plugins/
     owner: root
     group: root
     state: directory
 
 - name: Copy plugins
-  copy:
+  ansible.builtin.copy:
     src: plugins/{{ item }}
     dest: /usr/lib/check_mk_agent/plugins/{{ item }}
     owner: root
@@ -34,7 +34,7 @@
   with_items: "{{ check_mk_agent_plugins }}"
 
 - name: Create cache time directories
-  file:
+  ansible.builtin.file:
     name: /usr/lib/check_mk_agent/local/{{ item.value.cache_time }}
     state: directory
     owner: root
@@ -43,7 +43,7 @@
   with_dict: "{{ check_mk_agent_local_checks }}"
 
 - name: Copy local checks
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.value.src }}"
     dest: /usr/lib/check_mk_agent/local/{{ item.value.cache_time | default(omit) }}/{{ item.key }}
     owner: root
@@ -52,7 +52,7 @@
   with_dict: "{{ check_mk_agent_local_checks }}"
 
 - name: Start and enable check_mk.socket (use systemd-socket)
-  systemd:
+  ansible.builtin.systemd:
     name: check_mk.socket
     daemon_reload: true
     state: started
@@ -65,12 +65,12 @@
   block:
 
     - name: Install xinetd package
-      package:
+      ansible.builtin.package:
         name: xinetd
         state: present
 
     - name: Start and enable xinetd
-      service:
+      ansible.builtin.service:
         name: xinetd
         state: started
         enabled: true
@@ -80,7 +80,7 @@
     - check_mk_agent_over_xinetd
 
 - name: Setup SSH key
-  authorized_key:
+  ansible.posix.authorized_key:
     user: root
     key_options: 'command="/usr/bin/check_mk_agent",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc'
     key: "{{ check_mk_agent_ssh_pubkey }}"
@@ -93,7 +93,7 @@
   block:
 
     - name: Add check_mk user for use with sudo
-      user:
+      ansible.builtin.user:
         name: checkmk_agent
         system: true
         # set fixed uid
@@ -102,12 +102,12 @@
         state: present
 
     - name: Allow checkmk_agent user to run /usr/bin/check_mk_agent with sudo
-      copy:
+      ansible.builtin.copy:
         src: sudoers_check_mk_agent
         dest: /etc/sudoers.d/check_mk_agent
 
     - name: Setup SSH key with sudo
-      authorized_key:
+      ansible.posix.authorized_key:
         user: checkmk_agent
         key_options: 'command="sudo /usr/bin/check_mk_agent",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc'
         key: "{{ check_mk_agent_ssh_pubkey }}"
