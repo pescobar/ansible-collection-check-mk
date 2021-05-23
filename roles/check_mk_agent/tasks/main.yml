@@ -96,6 +96,7 @@
       user:
         name: checkmk_agent
         system: true
+        # set fixed uid
         home: /usr/lib/check_mk_agent/local
         createhome: false
         state: present
