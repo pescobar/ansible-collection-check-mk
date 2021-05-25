@@ -123,8 +123,8 @@
     username: "{{ check_mk_agent_monitoring_host_wato_username }}"
     password: "{{ check_mk_agent_monitoring_host_wato_secret }}"
     hostname: "{{ check_mk_agent_hostname_to_register | default(inventory_hostname) }}"
-    host_ip: "{{ ansible_host | default(omit) }}"
     folder: "{{ check_mk_agent_monitoring_host_folder }}"
+    #host_ip: "{{ ansible_host | default(omit) }}"
     #validate_certs: "{{ check_mk_agent_validate_api_ssl_certs }}"  # not used by now. we don't validate certs by default
     state: present
   when: check_mk_agent_add_to_wato
