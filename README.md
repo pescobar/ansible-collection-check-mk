@@ -10,6 +10,8 @@ SSL certs are not verified so you can use self-signed certs.
 
 ## role pescobar.check_mk.check_mk_agent
 
+Use this role to install and configure the check_mk agent in your machines.
+
 Role vars:
 
 ```
@@ -30,6 +32,8 @@ check_mk_agent_monitoring_host_folder: ""
 ```
 
 ## module pescobar.check_mk.host 
+
+```
 
 > PESCOBAR.CHECK_MK.HOST    (~/.ansible/collections/ansible_collections/pescobar/check_mk/plugins/modules/host.py)
 
@@ -136,9 +140,11 @@ RETURN VALUES:
 
         returned: always
         type: str
+```
 
 ## module pescobar.check_mk.folder
 
+```
 > PESCOBAR.CHECK_MK.FOLDER    (~/.ansible/collections/ansible_collections/pescobar/check_mk/plugins/modules/folder.py)
 
         Administer check_mk folders using the http API
@@ -218,9 +224,11 @@ RETURN VALUES:
 
         returned: always
         type: str
+```
 
 ## module pescobar.check_mk.hostgroup
 
+```
 > PESCOBAR.CHECK_MK.HOSTGROUP    (~/.ansible/collections/ansible_collections/pescobar/check_mk/plugins/modules/hostgroup.py)
 
         Administer check_mk hostgroups using the http API
@@ -305,9 +313,11 @@ RETURN VALUES:
 
         returned: always
         type: str
+```
 
 ## module pescobar.check_mk.servicegroup
 
+```
 > PESCOBAR.CHECK_MK.HOST    (~/.ansible/collections/ansible_collections/pescobar/check_mk/plugins/modules/host.py)
 
         Administer check_mk hosts using the http API
@@ -413,3 +423,4 @@ RETURN VALUES:
 
         returned: always
         type: str
+```
