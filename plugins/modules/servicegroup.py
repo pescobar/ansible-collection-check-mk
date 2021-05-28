@@ -21,14 +21,14 @@ ANSIBLE_METADATA = {
 
 DOCUMENTATION = '''
 ---
-module: hostgroup
+module: servicegroup
 
-short_description: Administer check_mk hostgroups using the http API
+short_description: Administer check_mk servicegroups using the http API
 
 version_added: "2.10"
 
 description:
-    - "Administer check_mk hostgroups using the http API"
+    - "Administer check_mk servicegroups using the http API"
 
 options:
     base_url:

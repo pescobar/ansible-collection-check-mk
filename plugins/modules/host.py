@@ -118,13 +118,17 @@ author:
 
 EXAMPLES = '''
 
-- name: Add a host
-  scicore.guacamole.guacamole_connection:
-    base_url: http://localhost/guacamole
-    auth_username: cmkadmin
-    auth_password: cmkadmin
-    host: test_host
+- name: Add host to check_mk instance via WATO API
+  pescobar.check_mk.host:
+    base_url: "{{ check_mk_agent_monitoring_host_url }}"
+    username: "{{ check_mk_agent_monitoring_host_wato_username }}"
+    password: "{{ check_mk_agent_monitoring_host_wato_secret }}"
+    hostname: "{{ check_mk_agent_hostname_to_register | default(inventory_hostname) }}"
+    folder: "{{ check_mk_agent_monitoring_host_folder }}"
     state: present
+  delegate_to: localhost
+  become: false
+
 '''
 
 RETURN = '''

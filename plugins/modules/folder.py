@@ -86,13 +86,16 @@ author:
 
 EXAMPLES = '''
 
-- name: Add a folder
+- name: Create a folder in check_mk for the tenant via WATO API
   pescobar.check_mk.folder:
-    base_url: http://localhost/cmk
-    auth_username: cmkadmin
-    auth_password: cmkadmin
-    folder_name: test_folder
+    base_url: "{{ check_mk_agent_monitoring_host_url }}"
+    username: "{{ check_mk_agent_monitoring_host_wato_username }}"
+    password: "{{ check_mk_agent_monitoring_host_wato_secret }}"
+    folder_name: "{{ check_mk_agent_monitoring_host_folder }}"
     state: present
+  delegate_to: localhost
+  become: false
+
 '''
 
 RETURN = '''

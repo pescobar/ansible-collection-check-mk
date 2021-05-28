@@ -90,14 +90,16 @@ author:
 
 EXAMPLES = '''
 
-- name: Add a hostgroup
-  scicore.guacamole.guacamole_connection:
-    base_url: http://localhost/guacamole
-    auth_username: cmkadmin
-    auth_password: cmkadmin
-    hostgroup: group1
-    alias: webservers
+- name: Create a hostgroup in check_mk for the tenant via WATO API
+  pescobar.check_mk.hostgroup:
+    base_url: "{{ check_mk_agent_monitoring_host_url }}"
+    username: "{{ check_mk_agent_monitoring_host_wato_username }}"
+    password: "{{ check_mk_agent_monitoring_host_wato_secret }}"
+    hostgroup: "new_hostgroup"
     state: present
+  delegate_to: localhost
+  become: false
+
 '''
 
 RETURN = '''
