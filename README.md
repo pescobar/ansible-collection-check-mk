@@ -318,9 +318,9 @@ RETURN VALUES:
 ## module pescobar.check_mk.servicegroup
 
 ```
-> PESCOBAR.CHECK_MK.HOST    (~/.ansible/collections/ansible_collections/pescobar/check_mk/plugins/modules/host.py)
+> PESCOBAR.CHECK_MK.SERVICEGROUP    (~/.ansible/collections/ansible_collections/pescobar/check_mk/plugins/modules/servicegroup.py)
 
-        Administer check_mk hosts using the http API
+        Administer check_mk servicegroups using the http API
 
 OPTIONS (= is mandatory):
 
@@ -328,6 +328,11 @@ OPTIONS (= is mandatory):
         Should we activate the changes on execution?
         [Default: True]
         type: bool
+
+- alias
+        Alias for the servicegroup
+        [Default: (null)]
+        type: str
 
 = auth_password
         Password to login to the API
@@ -345,35 +350,10 @@ OPTIONS (= is mandatory):
         (Aliases: url)
         type: str
 
-- discover_services
-        Should we discover services in added host?
-        [Default: True]
-        type: bool
+= servicegroup
+        Name of the servicegroup to add/delete/update
 
-- host_alias
-        Alias for a host
-        (Aliases: alias)[Default: (null)]
         type: str
-
-- host_folder
-        Folder where to add the host
-        (Aliases: folder)[Default: /]
-        type: str
-
-- host_ip
-        IP of the host
-        (Aliases: ipaddress)[Default: (null)]
-        type: str
-
-= host_name
-        Name of the host to add/delete/update
-        (Aliases: hostname)
-        type: str
-
-- host_tags
-        Dict of tags to apply to the host (NOT IMPLEMENTED YET)
-        (Aliases: tags)[Default: (null)]
-        type: dict
 
 - state
         Create or delete the host?
@@ -399,28 +379,26 @@ VERSION_ADDED_COLLECTION: pescobar.check_mk
 
 EXAMPLES:
 
-- name: Add host to check_mk instance via WATO API
-  pescobar.check_mk.host:
-    base_url: "{{ check_mk_agent_monitoring_host_url }}"
-    username: "{{ check_mk_agent_monitoring_host_wato_username }}"
-    password: "{{ check_mk_agent_monitoring_host_wato_secret }}"
-    hostname: "{{ check_mk_agent_hostname_to_register | default(inventory_hostname) }}"
-    folder: "{{ check_mk_agent_monitoring_host_folder }}"
+- name: Add a servicegroup
+  pescobar.check_mk.servicegroup:
+    base_url: http://localhost:9090/cmk
+    auth_username: automation
+    auth_password: automation
+    servicegroup: servicegroup1
+    alias: dbs
     state: present
-  delegate_to: localhost
-  become: false
 
 
 RETURN VALUES:
-- host_info
-        Information about the created or updated host
-
-        returned: always
-        type: dict
-
 - msg
         Some extra info about what the module did
 
         returned: always
         type: str
+
+- servicegroup_info
+        Information about the created or updated servicegroup
+
+        returned: always
+        type: dict
 ```
