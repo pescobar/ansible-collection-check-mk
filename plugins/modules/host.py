@@ -201,7 +201,7 @@ def main():
             result['msg'] = "Host added: " + module.params.get('host_name')
 
         if module.params.get('discover_services'):
-            api.discover_services(module.params.get('host_name'))
+            api_discovery = api.discover_services(module.params.get('host_name'))
 
         result['host_info'] = api.get_host(module.params.get('host_name'))
 
@@ -223,6 +223,13 @@ def main():
     if module.params.get('activate_changes'):
         if result['changed']:
             api.activate_changes()
+        else:
+            if api_discovery:
+                if int(api_discovery['added']) != 0:
+                    api.activate_changes()
+                if int(api_discovery['removed']) != 0:
+                    api.activate_changes()
+
 
     module.exit_json(**result)
 
