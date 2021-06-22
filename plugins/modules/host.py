@@ -187,8 +187,10 @@ def main():
         if host_exists:
             # when updating/editing a host we cannot change the folder
             # if you want to change the folder you should remove/add the host
-            api.edit_host(module.params.get('host_name'), ipaddress=module.params.get('host_ip'), \
-                          alias=module.params.get('host_alias'))
+            if module.params.get('host_ip'):
+                api.edit_host(module.params.get('host_name'), ipaddress=module.params.get('host_ip'))
+            if module.params.get('host_alias'):
+                api.edit_host(module.params.get('host_name'), alias=module.params.get('host_alias'))
             result['msg'] = "Host updated: " + module.params.get('host_name')
         else:
             api.add_host(module.params.get('host_name'), \
