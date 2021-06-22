@@ -182,7 +182,8 @@ def main():
         result['changed'] = True
 
     if module.params.get('activate_changes'):
-        api.activate_changes()
+        if result['changed']:
+            api.activate_changes()
 
     module.exit_json(**result)
 
